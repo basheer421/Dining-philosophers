@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 20:23:36 by bammar            #+#    #+#             */
-/*   Updated: 2023/03/12 22:02:17 by bammar           ###   ########.fr       */
+/*   Updated: 2023/03/14 03:15:10 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,55 +49,72 @@ static bool	forks_available(t_thread_arg *targ)
 	return (true);
 }
 
-static void	set_forks(t_thread_arg *targ, bool val)
+static void	set_forks(t_thread_arg *targ, bool val, size_t lastuser)
 {
-	pthread_mutex_lock(targ->philo->lfork->is_used_mutex);
-	pthread_mutex_lock(targ->philo->rfork->is_used_mutex);
+	if (targ->philo->num % 2 == 0)
+	{
+		pthread_mutex_lock(targ->philo->rfork->is_used_mutex);
+		pthread_mutex_lock(targ->philo->lfork->is_used_mutex);
+	}
+	else
+	{
+		pthread_mutex_lock(targ->philo->lfork->is_used_mutex);
+		pthread_mutex_lock(targ->philo->rfork->is_used_mutex);
+	}
+	
 	targ->philo->rfork->is_used = val;
 	targ->philo->lfork->is_used = val;
+	targ->philo->rfork->last_user = lastuser;
+	targ->philo->lfork->last_user = lastuser;
 	pthread_mutex_unlock(targ->philo->rfork->is_used_mutex);
 	pthread_mutex_unlock(targ->philo->lfork->is_used_mutex);
 }
 
 static bool	eat(t_thread_arg *targ)
 {
-	if (!forks_available(targ))
+	if (dead(targ) || !forks_available(targ))
 		return (false);
-	pthread_mutex_lock(targ->philo->lfork->mutex);
-	pthread_mutex_lock(targ->philo->rfork->mutex);
-	set_forks(targ, true);
-	targ->philo->rfork->last_user = targ->philo->num;
-	targ->philo->lfork->last_user = targ->philo->num;
+	if (targ->philo->num % 2 == 0)
+	{
+		pthread_mutex_lock(targ->philo->rfork->mutex);
+		pthread_mutex_lock(targ->philo->lfork->mutex);
+	}
+	else
+	{
+		pthread_mutex_lock(targ->philo->lfork->mutex);
+		pthread_mutex_lock(targ->philo->rfork->mutex);
+	}
+	set_forks(targ, true, targ->philo->num);
 	if (dead(targ))
 		return ((void)pthread_mutex_unlock(targ->philo->rfork->mutex),
 			(void)pthread_mutex_unlock(targ->philo->rfork->mutex),
 			false);
+	targ->philo->state = EATING;
 	print_msg(targ, "has taken a fork");
 	print_msg(targ, "has taken a fork");
 	print_msg(targ, "is eating");
 	psleep(targ->args->eat_time);
 	pthread_mutex_unlock(targ->philo->rfork->mutex);
 	pthread_mutex_unlock(targ->philo->lfork->mutex);
-	set_forks(targ, false);
+	set_forks(targ, false, targ->philo->num);
 	return (true);
 }
 
 static void	go_sleep(t_thread_arg *targ)
 {
+	if (dead(targ) || targ->philo->state == SLEEPING)
+		return ;
 	print_msg(targ, "is sleeping");
 	psleep(targ->args->sleep_time);
+	targ->philo->state = SLEEPING;
 }
 
 static void	think(t_thread_arg *targ)
 {
-	if (dead(targ))
+	if (dead(targ) || targ->philo->state == THINKING)
 		return ;
 	print_msg(targ, "is thinking");
-	while (true)
-	{
-		if (forks_available(targ))
-			return ;
-	}
+	targ->philo->state = THINKING;
 }
 
 
@@ -107,11 +124,14 @@ void	*philo_life(void *t_arg)
 	t_thread_arg	*targ;
 
 	targ = (t_thread_arg *) (t_arg);
-	if (dead(targ))
-		return (NULL);
-	if (eat(targ))
-		go_sleep(targ);
-	else
-		think(targ);
+	while (true)
+	{
+		if (dead(targ))
+			return (NULL);
+		if (eat(targ))
+			go_sleep(targ);
+		else
+			think(targ);
+	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 20:08:55 by bammar            #+#    #+#             */
-/*   Updated: 2023/03/12 21:58:24 by bammar           ###   ########.fr       */
+/*   Updated: 2023/03/14 03:30:35 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	simulate_philos(t_philo_args *args, t_philo **philos)
 		thrd_arg[i].is_exit = &is_exit;
 		thrd_arg[i].exit_mutex = &exit_mutex;
 		thrd_arg[i].print_mutex = &print_mutex;
+		philos[i]->last_mealtime = get_time();
 		if (pthread_create(philos[i]->thread, NULL,
 			philo_life, &(thrd_arg[i])) != 0)
 				return ;
@@ -46,5 +47,6 @@ void	simulate_philos(t_philo_args *args, t_philo **philos)
 	{
 		pthread_join(*(philos[i++]->thread), NULL);
 	}
+	free(thrd_arg);
 	return ;
 }

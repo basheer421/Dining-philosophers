@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 21:56:30 by bammar            #+#    #+#             */
-/*   Updated: 2023/03/12 21:57:53 by bammar           ###   ########.fr       */
+/*   Updated: 2023/03/14 03:28:41 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,18 @@
 # include <pthread.h>
 # include <stdbool.h>
 # include <string.h>
+
+#define RED	"\x1B[31m"
+#define BLU	"\x1B[34m"
+#define WHT	"\x1B[37m"
+#define RST	"\033[0m"
+
+typedef enum e_state
+{
+	THINKING,
+	EATING,
+	SLEEPING
+}	t_state;
 
 // Shared (common args).
 typedef struct s_philo_args
@@ -51,6 +63,7 @@ typedef struct s_philo
 	t_fork			*rfork;
 	pthread_t		*thread;
 	time_t			last_mealtime;
+	t_state			state;
 }	t_philo;
 
 // Thread argument.
