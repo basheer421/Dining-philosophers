@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 21:56:30 by bammar            #+#    #+#             */
-/*   Updated: 2023/03/14 03:28:41 by bammar           ###   ########.fr       */
+/*   Updated: 2023/03/14 21:50:25 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@
 # include <stdbool.h>
 # include <string.h>
 
-#define RED	"\x1B[31m"
-#define BLU	"\x1B[34m"
+#define GRN	"\033[0;32m"
 #define WHT	"\x1B[37m"
 #define RST	"\033[0m"
 
