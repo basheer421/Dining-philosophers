@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 20:23:36 by bammar            #+#    #+#             */
-/*   Updated: 2023/03/18 00:56:51 by bammar           ###   ########.fr       */
+/*   Updated: 2023/03/18 01:28:14 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@ bool	dead(t_thread_arg *targ)
 			print_msg(targ, "died");
 		is_dead = true;
 	}
+	pthread_mutex_lock(targ->limit_mutex);
+	if (targ->args->is_limited
+		&& (*targ->limits_reached) == targ->args->count)
+		is_dead = true;
+	pthread_mutex_unlock(targ->limit_mutex);
 	*targ->is_exit = is_dead;
 	pthread_mutex_unlock(targ->exit_mutex);
 	return (is_dead);
@@ -49,6 +54,14 @@ void	think(t_thread_arg *targ)
 	targ->philo->state = THINKING;
 }
 
+static void	increase_limits_reached(t_thread_arg *targ)
+{
+	pthread_mutex_lock(targ->limit_mutex);
+	if (targ->philo->eat_count == targ->args->eat_limit)
+		(*targ->limits_reached)++;
+	pthread_mutex_unlock(targ->limit_mutex);
+}
+
 void	*philo_life(void *t_arg)
 {
 	t_thread_arg	*targ;
@@ -56,6 +69,7 @@ void	*philo_life(void *t_arg)
 	targ = (t_thread_arg *) (t_arg);
 	while (true)
 	{
+		increase_limits_reached(targ);
 		if (dead(targ))
 			return (NULL);
 		if (eat(targ))

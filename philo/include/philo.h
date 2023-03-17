@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 21:56:30 by bammar            #+#    #+#             */
-/*   Updated: 2023/03/18 00:57:43 by bammar           ###   ########.fr       */
+/*   Updated: 2023/03/18 01:04:18 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,10 @@ typedef struct s_thread_arg
 	t_philo			*philo;
 	t_philo_args	*args;
 	bool			*is_exit;
+	size_t			*limits_reached;
 	pthread_mutex_t	*exit_mutex;
 	pthread_mutex_t	*print_mutex;
+	pthread_mutex_t	*limit_mutex;
 }	t_thread_arg;
 
 void	print_error(const char *msg);

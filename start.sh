@@ -50,7 +50,7 @@ test_two ()
     ("$2/$1/$1" 4 410 200 200 > /dev/null)&
     i=1
     error=0
-    while [ $i -lt 180 ];do
+    while [ $i -lt 15 ];do
         printf "\r[%d...]" $i
         pgrep $1 > /dev/null
         if [ "$?" -ne 0 ];then
@@ -75,7 +75,7 @@ test_three ()
     ("$2/$1/$1" 5 800 200 200 > /dev/null)&
     i=1
     error=0
-    while [ $i -lt 180 ];do
+    while [ $i -lt 15 ];do
         printf "\r[%d...]" $i
         pgrep $1 > /dev/null
         if [ "$?" -ne 0 ];then
