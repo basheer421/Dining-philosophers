@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 20:08:55 by bammar            #+#    #+#             */
-/*   Updated: 2023/03/17 15:56:38 by bammar           ###   ########.fr       */
+/*   Updated: 2023/03/18 00:58:38 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,8 @@ void	simulate_philos(t_philo_args *args, t_philo **philos)
 				return ;	
 		i++;
 	}
-	
 	i = 0;
 	while (i < args->count)
-	{
 		pthread_join(*(philos[i++]->thread), NULL);
-	}
-	free(thrd_arg);
-	return ;
+	return (free(thrd_arg));
 }

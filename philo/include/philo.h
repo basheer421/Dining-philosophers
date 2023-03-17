@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 21:56:30 by bammar            #+#    #+#             */
-/*   Updated: 2023/03/14 21:50:25 by bammar           ###   ########.fr       */
+/*   Updated: 2023/03/18 00:57:43 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <pthread.h>
 # include <stdbool.h>
 # include <string.h>
+# include "time.h"
 
 #define GRN	"\033[0;32m"
 #define WHT	"\x1B[37m"
@@ -105,5 +106,13 @@ void	simulate_philos(t_philo_args *args, t_philo **philos);
 
 // Routine
 void	*philo_life(void *t_arg);
+
+// -- Life functions --
+bool	dead(t_thread_arg *targ);
+bool	eat(t_thread_arg *targ);
+void	go_sleep(t_thread_arg *targ);
+void	think(t_thread_arg *targ);
+void	lock2(pthread_mutex_t *m1, pthread_mutex_t *m2);
+void	unlock2(pthread_mutex_t *m1, pthread_mutex_t *m2);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: bammar <bammar@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/31 21:59:12 by bammar            #+#    #+#              #
-#    Updated: 2023/03/17 15:25:17 by bammar           ###   ########.fr        #
+#    Updated: 2023/03/18 00:33:28 by bammar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,8 @@ FILES	=	src/philo.c \
 			src/philo_time.c \
 			src/simulation.c \
 			src/life.c \
+			src/eat.c \
+			src/philo_lock.c \
 			src/psleep.c \
 			src/msg.c \
 			src/philo_destroy.c
