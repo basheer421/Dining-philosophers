@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 20:23:36 by bammar            #+#    #+#             */
-/*   Updated: 2023/03/18 01:28:14 by bammar           ###   ########.fr       */
+/*   Updated: 2023/03/18 01:38:57 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	*philo_life(void *t_arg)
 {
 	t_thread_arg	*targ;
 
-	targ = (t_thread_arg *) (t_arg);
+	targ = (t_thread_arg *)(t_arg);
 	while (true)
 	{
 		increase_limits_reached(targ);

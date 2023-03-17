@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 17:23:19 by bammar            #+#    #+#             */
-/*   Updated: 2023/03/17 15:49:26 by bammar           ###   ########.fr       */
+/*   Updated: 2023/03/18 01:38:23 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@ void	print_msg(t_thread_arg *targ, const char *state)
 		"", targ->philo->num,
 		state,
 		""
-	);
+		);
 	pthread_mutex_unlock(targ->print_mutex);
 }

@@ -6,13 +6,13 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 00:38:25 by bammar            #+#    #+#             */
-/*   Updated: 2023/02/04 18:40:02 by bammar           ###   ########.fr       */
+/*   Updated: 2023/03/18 01:38:41 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int ft_strlen(const char *s)
+int	ft_strlen(const char *s)
 {
 	int	i;
 

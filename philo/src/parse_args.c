@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 00:30:20 by bammar            #+#    #+#             */
-/*   Updated: 2023/03/12 19:48:10 by bammar           ###   ########.fr       */
+/*   Updated: 2023/03/18 01:39:41 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static bool	contains_nonnum(const char *str)
 		if ((*temp < '0' || *temp > '9')
 			&& *temp != '+')
 			return (true);
-		else
+	else
 			temp++;
 	return (false);
 }
@@ -84,10 +84,10 @@ bool	fill_philo_args(int argc, char **argv, t_philo_args *args)
 		args->eat_limit = ft_atol(words[4]);
 	args->start_time = get_time();
 	if (!is_valid_num(words[0], args->count)
-		||	!is_valid_num(words[1], args->die_time)
-		||  !is_valid_num(words[2], args->eat_time)
-		||  !is_valid_num(words[3], args->sleep_time)
-		||  !is_valid_num(words[4], args->eat_limit))
+		|| !is_valid_num(words[1], args->die_time)
+		|| !is_valid_num(words[2], args->eat_time)
+		|| !is_valid_num(words[3], args->sleep_time)
+		|| !is_valid_num(words[4], args->eat_limit))
 		return (destroy_words(words), false);
 	return (destroy_words(words), true);
 }

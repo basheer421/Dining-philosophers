@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 21:56:30 by bammar            #+#    #+#             */
-/*   Updated: 2023/03/18 01:04:18 by bammar           ###   ########.fr       */
+/*   Updated: 2023/03/18 01:43:22 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@
 # include <string.h>
 # include "time.h"
 
-#define GRN	"\033[0;32m"
-#define WHT	"\x1B[37m"
-#define RST	"\033[0m"
+# define GRN	"\033[0;32m"
+# define WHT	"\x1B[37m"
+# define RST	"\033[0m"
 
 typedef enum e_state
 {
@@ -78,9 +78,19 @@ typedef struct s_thread_arg
 	pthread_mutex_t	*limit_mutex;
 }	t_thread_arg;
 
+typedef struct s_sim_args
+{
+	t_thread_arg	*thrd_arg;
+	size_t			limits_reached;
+	bool			is_exit;
+	pthread_mutex_t	exit_mutex;
+	pthread_mutex_t	print_mutex;
+	pthread_mutex_t	limit_mutex;
+}	t_sim_args;
+
 void	print_error(const char *msg);
 long	ft_atol(const char *str);
-int 	ft_strlen(const char *s);
+int		ft_strlen(const char *s);
 char	*ft_strdup(const char *s);
 int		ft_index(const char *str, int c);
 char	*ft_strtrim(char const *s1, char const *set);
