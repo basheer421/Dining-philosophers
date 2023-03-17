@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 20:08:55 by bammar            #+#    #+#             */
-/*   Updated: 2023/03/14 03:30:35 by bammar           ###   ########.fr       */
+/*   Updated: 2023/03/17 15:56:38 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	simulate_philos(t_philo_args *args, t_philo **philos)
 		philos[i]->last_mealtime = get_time();
 		if (pthread_create(philos[i]->thread, NULL,
 			philo_life, &(thrd_arg[i])) != 0)
-				return ;
+				return ;	
 		i++;
 	}
 	

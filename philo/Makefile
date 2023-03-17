@@ -6,7 +6,7 @@
 #    By: bammar <bammar@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/31 21:59:12 by bammar            #+#    #+#              #
-#    Updated: 2023/03/12 22:01:20 by bammar           ###   ########.fr        #
+#    Updated: 2023/03/17 15:25:17 by bammar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ FILES	=	src/philo.c \
 
 CC		=	cc
 
-CFLAGS	=	-Wall -Werror -Wextra  -I ./include -g
+CFLAGS	=	-Wall -Werror -Wextra  -I ./include
 
 LINKS	=	-pthread
 
