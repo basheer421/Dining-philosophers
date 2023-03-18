@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 21:56:30 by bammar            #+#    #+#             */
-/*   Updated: 2023/03/18 01:43:22 by bammar           ###   ########.fr       */
+/*   Updated: 2023/03/18 18:09:01 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <pthread.h>
 # include <stdbool.h>
 # include <string.h>
-# include "time.h"
+# include <time.h>
 
 # define GRN	"\033[0;32m"
 # define WHT	"\x1B[37m"
