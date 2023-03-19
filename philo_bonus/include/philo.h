@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 21:56:30 by bammar            #+#    #+#             */
-/*   Updated: 2023/03/18 22:50:26 by bammar           ###   ########.fr       */
+/*   Updated: 2023/03/19 20:03:04 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,11 @@
 # include <pthread.h>
 # include <stdbool.h>
 # include <string.h>
-# include <time.h>
 # include <semaphore.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <fcntl.h>
+# include <signal.h>
 
 # define GRN	"\033[0;32m"
 # define WHT	"\x1B[37m"
@@ -31,7 +34,8 @@ typedef enum e_state
 {
 	THINKING,
 	EATING,
-	SLEEPING
+	SLEEPING,
+	DEATH
 }	t_state;
 
 // Shared (common args).

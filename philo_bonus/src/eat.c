@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 23:01:13 by bammar            #+#    #+#             */
-/*   Updated: 2023/03/18 23:01:31 by bammar           ###   ########.fr       */
+/*   Updated: 2023/03/19 20:01:34 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	eat(t_process_arg *targ)
 {
-	if (dead(targ) || targ->args->count == 1)
+	if (targ->args->count == 1)
 		return (false);
 	sem_wait(targ->forks_sem);
 	targ->philo->state = EATING;
