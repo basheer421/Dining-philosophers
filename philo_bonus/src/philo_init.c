@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 15:27:25 by bammar            #+#    #+#             */
-/*   Updated: 2023/03/19 17:25:55 by bammar           ###   ########.fr       */
+/*   Updated: 2023/03/20 20:32:07 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_philo	**get_philos(t_philo_args *args)
 		if (!(philos[i]))
 			return (print_error("Error\nNo mem\n"), NULL);
 		memset(philos[i], 0, sizeof(t_philo));
+		philos[i]->state = 0;
 		philos[i]->num = i + 1;
 		philos[i]->last_mealtime = get_time();
 		i++;

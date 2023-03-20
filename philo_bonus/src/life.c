@@ -6,37 +6,53 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 22:14:59 by bammar            #+#    #+#             */
-/*   Updated: 2023/03/19 19:58:09 by bammar           ###   ########.fr       */
+/*   Updated: 2023/03/20 20:44:22 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-bool	dead(t_process_arg *targ)
+static time_t	get_lastmeal_time(t_process_arg *targ)
 {
-	bool	is_dead;
+	time_t			lmt;
 
+	pthread_mutex_lock(targ->philo->mealtime_mutex);
+	lmt = targ->philo->last_mealtime;
+	pthread_mutex_unlock(targ->philo->mealtime_mutex);
+	return (lmt);
+}
+
+static void	*dead(void *t_arg)
+{
+	bool			is_dead;
+	t_process_arg	*targ;
+
+	targ = t_arg;
 	is_dead = false;
-	if (get_time() - targ->philo->last_mealtime
-		>= (time_t)targ->args->die_time)
+	while (!is_dead)
 	{
-		if (!is_dead)
-			print_msg(targ, "died");
-		sem_post(targ->exit_sem);
-		exit(0);
-		is_dead = true;
+		if (get_time() - get_lastmeal_time(targ)
+			>= (time_t)targ->args->die_time)
+		{
+			if (!is_dead)
+				print_msg(targ, "died");
+			is_dead = true;
+		}
+		else if (targ->args->is_limited
+			&& targ->args->eat_limit == targ->philo->eat_count)
+			is_dead = true;
+		if (is_dead)
+		{
+			sem_post(targ->exit_sem);
+			exit(0);
+		}
 	}
-	sem_wait(targ->limit_sem);
-	if (targ->args->is_limited
-		&& (*targ->limits_reached) == targ->args->count)
-		is_dead = true;
-	sem_post(targ->limit_sem);
-	return (is_dead);
+	return (NULL);
 }
 
 void	think(t_process_arg *targ)
 {
-	if (dead(targ) || targ->philo->state == THINKING)
+	if (targ->philo->state == THINKING)
 		return ;
 	print_msg(targ, "is thinking");
 	targ->philo->state = THINKING;
@@ -44,28 +60,24 @@ void	think(t_process_arg *targ)
 
 void	go_sleep(t_process_arg *targ)
 {
-	if (dead(targ) || targ->philo->state == SLEEPING)
+	if (targ->philo->state == SLEEPING)
 		return ;
 	print_msg(targ, "is sleeping");
 	psleep(targ->args->sleep_time);
 	targ->philo->state = SLEEPING;
 }
 
-// static void	increase_limits_reached(t_process_arg *targ)
-// {
-// 	sem_wait(targ->limit_sem);
-// 	if (targ->philo->eat_count == targ->args->eat_limit)
-// 		(*targ->limits_reached)++;
-// 	sem_post(targ->limit_sem);
-// }
-
-void philo_life(t_process_arg *targ)
+void	philo_life(t_process_arg *targ)
 {
+	pthread_t		thread;
+	pthread_mutex_t	meal_mutex;
+
+	pthread_mutex_init(&meal_mutex, NULL);
+	targ->philo->mealtime_mutex = &meal_mutex;
+	pthread_create(&thread, NULL, dead, targ);
 	while (true)
 	{
-		// increase_limits_reached(targ);
-		if (dead(targ))
-			return ;
+		psleep(1);
 		if (eat(targ))
 			go_sleep(targ);
 		else
